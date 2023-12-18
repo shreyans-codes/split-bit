@@ -1,7 +1,7 @@
 import axios from "axios";
 
-let BASE_AUTH_URL = "http://localhost:8081/auth";
-let BASE_APPLICATION_URL = "http://localhost:8080/todo";
+// let BASE_AUTH_URL = "http://localhost:8080/auth";
+let BASE_AUTH_URL = "http://localhost:8080/api/v1/demo";
 
 export const registerUser = async (userData) => {
   try {
@@ -12,25 +12,12 @@ export const registerUser = async (userData) => {
       firstName: userData.firstName,
       lastName: userData.lastName,
       mfaEnabled: userData.mfaEnabled,
-      application: "Just Do",
-    });
-    await createApplicationAccount({
-      id: response.data.user.userId,
-      username: userData.username,
-      name: response.data.firstName + response.data.lastName,
+      application: "Split Bit",
     });
     return response;
   } catch (error) {
     throw new Error(error);
   }
-};
-
-const createApplicationAccount = async (userData) => {
-  await axios.post(`${BASE_APPLICATION_URL}/create`, {
-    id: userData.id,
-    username: userData.username,
-    name: userData.name,
-  });
 };
 
 export const loginToAccount = async (userData) => {
@@ -57,7 +44,31 @@ export const loginToAccount = async (userData) => {
   }
 };
 
-export const logout = () => {
+//* This
+// export const fetchAccount = async () => {
+//   try {
+//     const response = await axios.get(`${BASE_AUTH_URL}/userDetails`, {
+//       withCredentials: true,
+//     });
+//     console.log("Fetch response: ", response);
+//     return response.data;
+//   } catch (error) {
+//     throw new Error(error);
+//   }
+// };
+
+//* This
+// export const logout = async () => {
+//   document.cookie = "firstName=Shreyans";
+
+//   // document.cookie =
+//   //   "JSESSIONID=cookievalue; expires= Thu, 21 Aug 2014 20:00:00 UTC";
+//   await axios.post(`http://localhost:8080/logout`, { withCredentials: true });
+
+//   localStorage.removeItem("token");
+// };
+
+export const logout = async () => {
   localStorage.removeItem("token");
 };
 

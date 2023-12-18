@@ -68,7 +68,27 @@ export const verifyMFACodeAsync = createAsyncThunk(
   }
 );
 
-export const logoutFromAccount = createAsyncThunk("auth/logout", async () => {
+//* This
+
+// export const fetchAccountAsync = createAsyncThunk(
+//   "auth/fetchAccount",
+//   async (userData, thunkAPI) => {
+//     try {
+//       const response = await fetchAccount();
+//       return response;
+//     } catch (error) {
+//       const message =
+//         (error.response &&
+//           error.response.data &&
+//           error.response.data.message) ||
+//         error.message ||
+//         error.toString();
+//       return thunkAPI.rejectWithValue(message);
+//     }
+//   }
+// );
+
+export const logoutFromAccount = createAsyncThunk("auth/logout", () => {
   logout();
 });
 
@@ -136,6 +156,24 @@ export const authSlice = createSlice({
       state.message = action.payload;
       state.user = null;
     },
+    //* This
+    // [fetchAccountAsync.pending]: (state, action) => {
+    //   state.isLoading = true;
+    // },
+    // [fetchAccountAsync.fulfilled]: (state, action) => {
+    //   state.isLoading = false;
+    //   state.isSuccess = true;
+    //   state.isError = false;
+    //   state.user = action.payload;
+    //   state.message = "";
+    // },
+    // [fetchAccountAsync.rejected]: (state, action) => {
+    //   state.isLoading = false;
+    //   state.isSuccess = false;
+    //   state.isError = true;
+    //   state.user = null;
+    //   state.message = action.payload;
+    // },
     [logoutFromAccount.fulfilled]: (state) => {
       state.user = null;
       state.message = "";

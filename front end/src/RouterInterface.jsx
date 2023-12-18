@@ -6,16 +6,16 @@ import SignUp from "./pages/SignUp";
 import VerifyPage from "./pages/VerifyPage";
 import { useSelector } from "react-redux";
 import Home from "./pages/Home";
-
 const RouterInterface = () => {
   const user = useSelector((state) => state.auth.user);
   const RequireAuth = ({ children }) => {
-    console.log("User: ", user);
-    if (user === null) {
-      return <Navigate to={"/login"} />;
-    } else {
-      return children;
-    }
+    return children;
+    // console.log("User: ", user);
+    // if (user === null) {
+    //   return <Navigate to={"/login"} />;
+    // } else {
+    //   return children;
+    // }
   };
   return (
     <>
@@ -24,7 +24,15 @@ const RouterInterface = () => {
           <Route path="/">
             <Route path="login" element={<LogInPage />} />
             <Route index element={<App />} />
-            <Route path="/home" element={<Home />} />
+            {/* This <Route path="fetch" element={<FetcherPage />} /> */}
+            <Route
+              path="home"
+              element={
+                <RequireAuth>
+                  <Home />
+                </RequireAuth>
+              }
+            />
             <Route path="signup" element={<SignUp />} />
             <Route path="verify" element={<VerifyPage />} />
           </Route>

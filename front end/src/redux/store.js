@@ -1,7 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import authReducer from "./authSlice";
 import storage from "redux-persist/lib/storage";
-// import todoReducer from "./todoSlice";
 import authReducer from "./authSlice";
 import {
   persistReducer,
@@ -15,7 +13,7 @@ import {
 } from "redux-persist";
 
 const persistAuthConfig = {
-  key: "auth",
+  key: "split-auth",
   storage,
 };
 
