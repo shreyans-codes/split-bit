@@ -12,7 +12,7 @@ class SplitPaymentCalcClass {
   }
 
   get_transactions() {
-    const [bins, items] = this.calculate_bins_and_items(); // Calculates bins `(where someone paid more) and items (where someone paid less)
+    const [bins, items] = this.calculate_bins_and_items(); // Calculates bins (where someone paid more) and items (where someone paid less)
 
     if (bins.length === 1) {
       const bin = bins[0];

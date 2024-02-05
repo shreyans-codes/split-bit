@@ -6,6 +6,8 @@ import SignUp from "./pages/SignUp";
 import VerifyPage from "./pages/VerifyPage";
 import { useSelector } from "react-redux";
 import Home from "./pages/Home";
+import GroupsPage from "./pages/GroupsPage";
+import { TransactionPage } from "./pages/TransactionPage";
 const RouterInterface = () => {
   const user = useSelector((state) => state.auth.user);
   const RequireAuth = ({ children }) => {
@@ -35,6 +37,8 @@ const RouterInterface = () => {
             />
             <Route path="signup" element={<SignUp />} />
             <Route path="verify" element={<VerifyPage />} />
+            <Route path="groups" element={<GroupsPage />} />
+            <Route path="transaction" element={<TransactionPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

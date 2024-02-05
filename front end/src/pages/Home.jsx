@@ -4,12 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutFromAccount } from "../redux/authSlice";
 import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa6";
+import {
+  addFriend,
+  removeFriend,
+  addGroup,
+  removeTransaction,
+} from "../redux/groupsSlice";
 
 const Home = () => {
   const [showInput, setShowInput] = useState(false);
   const [userName, setUserName] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const groupsState = useSelector((state) => state.groups.groupList);
   // const authState = useSelector((state) => state.auth);
   const performLogout = () => {
     dispatch(logoutFromAccount()).then(() => {
@@ -18,6 +25,7 @@ const Home = () => {
       navigate("/");
     });
   };
+  console.log(groupsState);
   return (
     <>
       <br />
@@ -37,7 +45,7 @@ const Home = () => {
           <div className=" flex items-center justify-center mt-4 m-auto">
             <FaUser />
             <input
-              className=" m-2 rounded"
+              className=" border-0 active:border-spacing-2 m-2 rounded"
               type="text"
               onChange={(e) => {
                 setUserName(e.target.value);
@@ -49,6 +57,9 @@ const Home = () => {
               className="cursor-pointer transition-all text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
               onClick={() => {
                 console.log("Yuuppp");
+                dispatch(
+                  removeFriend({ groupId: groupsState[0].id, fName: userName })
+                );
                 setShowInput(!showInput);
               }}
             >
@@ -56,14 +67,45 @@ const Home = () => {
             </button>
           </div>
         ) : null}
+
         <br />
         <br />
         <button
-          className=" cursor-pointer transition-all text-white px-6 py-2 rounded-lg border-red-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+          className="cursor-pointer transition-all text-white px-6 py-2 rounded-lg border-red-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
           onClick={performLogout}
         >
           Logout
         </button>
+        {groupsState.map((group) => {
+          console.log(group);
+          return (
+            <div key={group.id}>
+              <p>{group.name}</p>
+              <div className="ml-8 flex flex-col">
+                {group.friends.map((friend) => (
+                  <div key={friend.id}>
+                    {"||"}
+                    --{friend.name}
+                    <button
+                      onClick={() => {
+                        console.log("Yuuppp");
+                        dispatch(
+                          removeTransaction({
+                            groupId: group.id,
+                            friendId: "f-001",
+                            transactionId: "t-001",
+                          })
+                        );
+                      }}
+                    >
+                      Remove User
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </>
   );

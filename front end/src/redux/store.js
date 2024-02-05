@@ -11,17 +11,29 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import groupReducer from "./groupsSlice";
 
 const persistAuthConfig = {
   key: "split-auth",
   storage,
 };
 
+const persistGroupsConfig = {
+  key: "split-groups",
+  storage,
+};
+
 const persistedAuthReducer = persistReducer(persistAuthConfig, authReducer);
+
+const persistedGroupsReducer = persistReducer(
+  persistGroupsConfig,
+  groupReducer
+);
 
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    groups: persistedGroupsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
